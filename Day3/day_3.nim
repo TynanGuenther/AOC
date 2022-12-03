@@ -1,7 +1,5 @@
 import strutils,map,tables
 
-
-
 proc item_sort(file:string):int =
   let input = readFile(file)
   var rucks = input.split('\n')
@@ -11,7 +9,6 @@ proc item_sort(file:string):int =
   for ruck in rucks:
     let comp1 = ruck[0..(ruck.len div 2)-1]
     let comp2 = ruck[(ruck.len div 2)..ruck.len-1]
-    var compScore = 0
     for i in comp1:
       if comp2.contains(i):
         total += map[i]
