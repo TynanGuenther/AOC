@@ -27,31 +27,29 @@ proc parse(file:string):seq[dir]=
   var all:seq[dir]
   var home:dir = dir(size:0, subdirs:all)
   var cd = home
-  var count = 1
 
   for j,i in line:
     
     if i == "$ cd /":
-      echo i, "1"
       cd = home
-    elif match(i, re"ls", start=2):
-      echo i, 2
+    elif match(i, re"ls", start=2) or match(i, re"[dir ]((?:\w+))"):
       continue
     elif match(i, re"\.\.$", start=5):
-      echo i,3
       cd = cd.parent
     elif match(i, re"([cd ](?:\w+))", start=2):
-      echo i,4
       var nw = mkdir(cd)
       cd.subdirs.add(nw)
       cd = nw
       all.add(nw)
     elif match(i, re"^[1-9]"):
-      echo i,5
       var size = fileSize(i)
       cd.size += size
       if cd.parent != nil:
-        cd.parent.size += size
+        var c = cd
+        while cd.parent != nil:
+          cd.parent.size += size
+          cd = cd.parent
+        cd = c
     else:
       continue
   return all
