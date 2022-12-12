@@ -21,7 +21,7 @@ proc bush(file:string):seq[seq[tree]]=
     trees.add(row)
   return trees
 
-var forest = bush("test_input")
+var forest = bush("day8_input")
 proc tree_house()=
    
   for i in 1..forest.len-2:
@@ -52,7 +52,7 @@ proc tree_house()=
             forest[i][j].v_top = true
             break
         else:
-          forest[i][j].d_up += 1
+          forest[i][j].d_down += 1
           break
         d += 1
 #left      
@@ -115,9 +115,7 @@ proc tallest():int=
   var highest = 0
   for row in forest:
     for tre in row:
-      echo tre.d_up, " ", tre.d_down, " ", tre.d_left," ", tre.d_right
       var cur = tre.d_up * tre.d_down * tre.d_left * tre.d_right
-      echo cur
       if cur > highest:
         highest = cur
   return highest
