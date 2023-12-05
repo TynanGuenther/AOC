@@ -40,12 +40,8 @@ int find_fnl(){
     }
 
     std::string line;
-
     int total=0;
-
-
     while (std::getline(infile, line)) {
-        cout << line << endl;
         int first = -1;
         int last = -1;
         int next = 0;
@@ -80,7 +76,6 @@ int find_fnl(){
             count++;
         }
         int combine = (first*10) + last;
-        cout << "Combine: " << combine << endl;
         total += combine;
     }
     return total;
