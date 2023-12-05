@@ -52,18 +52,19 @@ int find_fnl(){
         int firstPos=numeric_limits<int>::max();
         int lastPos=-1;
         for (const auto& pair : nums) {
-            int position = line.find(pair.first);
-            if (position != std::string::npos) {
-                if(position < firstPos) {
-                    firstPos = position;
-                    first = pair.second;
-                    cout << "First: " << first << endl;
+            int position = 0;
+            while((position = line.find(pair.first, position)) != string::npos){
+                if (position != std::string::npos) {
+                    if(position < firstPos) {
+                        firstPos = position;
+                        first = pair.second;
+                    }
+                    if(position > lastPos){
+                        lastPos = position;
+                        last = pair.second;
+                    }
                 }
-                if(position > lastPos){
-                    lastPos = position;
-                    last = pair.second;
-                    cout << "Last: " << last << endl;
-                }
+                position++;
             }
         }
         int count = 0;
@@ -71,20 +72,16 @@ int find_fnl(){
             if(count < firstPos && isdigit(ch)){
                 first = ch - '0';
                 firstPos = count;
-                cout << "New First: " << first << endl;
             }
             if(count > lastPos && isdigit(ch)){
                 last = ch - '0';  
                 lastPos = count;
-                cout << "New Last: " << last<< endl;
             }
             count++;
         }
-        cout << "First: " << first << " Last: " << last << endl; 
         int combine = (first*10) + last;
         cout << "Combine: " << combine << endl;
         total += combine;
-        cout << "Total: " << total << endl;
     }
     return total;
 }
